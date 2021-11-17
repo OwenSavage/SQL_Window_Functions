@@ -32,3 +32,24 @@ SELECT
 FROM rankings
 WHERE
     YEARLY_SPORT_RANK = 1;
+
+WITH yearly_rank AS (
+    SELECT
+        YEAR,
+        NAME,
+        EARNINGS,
+        ROW_NUMBER() over (PARTITION BY YEAR ORDER BY EARNINGS DESC) AS year_rank
+    FROM
+        TOP_ATHLETES
+)
+
+SELECT
+    YEAR,
+    NAME,
+    EARNINGS
+FROM
+    yearly_rank
+WHERE
+    year_rank = 1
+ORDER BY
+    YEAR DESC;
