@@ -53,3 +53,9 @@ WHERE
     year_rank = 1
 ORDER BY
     YEAR DESC;
+
+SELECT
+    NAME,
+    EARNINGS
+FROM
+    TOP_ATHLETES;
