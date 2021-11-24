@@ -59,3 +59,36 @@ SELECT
     EARNINGS
 FROM
     TOP_ATHLETES;
+
+SELECT
+    NAME,
+    EARNINGS,
+    SPORT,
+    YEAR,
+    AVG(EARNINGS) OVER (PARTITION BY SPORT, YEAR) AS yearly_sport_avg
+FROM
+    TOP_ATHLETES
+ORDER BY
+    EARNINGS DESC ;
+
+
+WITH TEMP AS (
+    SELECT
+        NAME,
+        YEAR,
+        EARNINGS,
+        SUM(EARNINGS) OVER (PARTITION BY NAME) AS athlete_total
+    FROM
+        TOP_ATHLETES)
+
+SELECT
+    NAME,
+    YEAR,
+    EARNINGS,
+    (EARNINGS / athlete_total) AS percent_of_athlete_total
+FROM
+    TEMP
+ORDER BY
+    4 DESC;
+
+)
